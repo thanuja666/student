@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="implementationFlow" doc:id="c864ce66-f2e3-42af-bb6d-41bd9666b452" >
+		<choice doc:name="Choice" doc:id="a12e6cc0-b84e-450e-be83-74f6f704f319" >
+			<when expression="#[payload.studentId != 104]">
+				<logger level="INFO" doc:name="Logger" doc:id="f9a6e8db-a69d-4b97-ad36-ae261d345e14" message='#["Not a valid student record : " ++ payload.studentId]'/>
+				<raise-error doc:name="Raise error" doc:id="f1ca9675-c187-417c-894d-68dc8bfb98ea" type="STUDENT:STUID" description="studentId not found" />
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="92ae2258-a85a-47e5-be65-750844387541">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+    {
+        "studentId": 102,
+        "fname": "Jayachandra",
+        "studentName": "Thanuja",
+        "branch": "IT"
+    }
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			</otherwise>
+		</choice>
+		<error-handler ref="Common_Error_Handler" />
+		
+	</flow>
+</mule>

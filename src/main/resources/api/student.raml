@@ -1,0 +1,49 @@
+#%RAML 1.0
+title: student API
+mediaType:
+  - application/json
+version: v1
+protocols:
+  - HTTP
+types:
+  student_get_response:
+    type: object
+    properties:
+      studentName:
+        type: string
+        description: Name of the student
+        required: true
+        example:
+          thanuja
+      studentId:
+        type: integer
+        description: id of the student
+        required: true
+        example:
+          101
+      fName:
+        type: string
+        description: fathers name
+        required: true
+        example:
+          abcd
+      branch:
+        type: string
+        description: branch of the student
+        required: true
+        example:
+          cse
+      
+      
+/stu:
+  displayName: student
+  description: student details
+  get:
+    description: Retriving the student details
+    responses:
+      200:
+        body:
+          application/json:
+            type: student_get_response
+          
+              
